@@ -1,0 +1,109 @@
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+enum Role {
+  RETURNER
+  EMPLOYER
+}
+
+enum WorkType {
+  REMOTE
+  HYBRID
+  ONSITE
+}
+
+enum ApplicationStatus {
+  APPLIED
+  REVIEWING
+  SHORTLISTED
+}
+
+model User {
+  id            String         @id @default(uuid())
+  name          String
+  email         String         @unique
+  password      String
+  role          Role
+  createdAt     DateTime       @default(now())
+  
+  profile       ReturnProfile?
+  jobs          Job[]          @relation("EmployerJobs")
+  applications  Application[]
+  progress      UserProgress[]
+}
+
+model ReturnProfile {
+  id           String   @id @default(uuid())
+  userId       String   @unique
+  user         User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+  cvUrl        String?
+  skills       String[]
+  gapYears     Int
+  gapReason    String
+  availability String
+  skillScore   Int      @default(0)
+}
+
+model Course {
+  id          String   @id @default(uuid())
+  title       String
+  description String
+  duration    String
+  level       String
+  modules     Module[]
+}
+
+model Module {
+  id          String         @id @default(uuid())
+  courseId    String
+  course      Course         @relation(fields: [courseId], references: [id], onDelete: Cascade)
+  title       String
+  content     String
+  order       Int
+  progress    UserProgress[]
+}
+
+model UserProgress {
+  id          String   @id @default(uuid())
+  userId      String
+  user         User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+  moduleId    String
+  module      Module   @relation(fields: [moduleId], references: [id], onDelete: Cascade)
+  completed   Boolean  @default(false)
+  completedAt DateTime @default(now())
+
+  @@unique([userId, moduleId])
+}
+
+model Job {
+  id           String        @id @default(uuid())
+  employerId   String
+  employer     User          @relation("EmployerJobs", fields: [employerId], references: [id], onDelete: Cascade)
+  title        String
+  description  String
+  skills       String[]
+  workType     WorkType
+  salaryMin    Int
+  salaryMax    Int
+  isActive     Boolean       @default(true)
+  applications Application[]
+}
+
+model Application {
+  id         String            @id @default(uuid())
+  jobId      String
+  job        Job               @relation(fields: [jobId], references: [id], onDelete: Cascade)
+  userId     String
+  user       User              @relation(fields: [userId], references: [id], onDelete: Cascade)
+  matchScore Int               @default(0)
+  status     ApplicationStatus @default(APPLIED)
+  createdAt  DateTime          @default(now())
+
+  @@unique([jobId, userId])
+}

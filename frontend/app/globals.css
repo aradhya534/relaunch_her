@@ -1,0 +1,50 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  h1, h2, h3, h4, h5, h6 {
+    @apply font-serif text-brand-dark;
+  }
+}
+
+/* Premium Card Glow Effect (Light) */
+.glow-card {
+  box-shadow: 0 10px 30px -10px rgba(45, 27, 105, 0.06);
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  border: 1px solid rgba(61, 40, 128, 0.05);
+}
+
+.glow-card:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 20px 40px -15px rgba(45, 27, 105, 0.12), 0 0 25px rgba(0, 201, 177, 0.12);
+  border-color: rgba(0, 201, 177, 0.3);
+}
+
+/* Premium Card Glow Effect (Dark) */
+.glow-card-dark {
+  box-shadow: 0 12px 35px -12px rgba(0, 0, 0, 0.3);
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  border: 1px solid rgba(45, 27, 105, 0.3);
+}
+
+.glow-card-dark:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 24px 45px -15px rgba(0, 0, 0, 0.5), 0 0 30px rgba(0, 201, 177, 0.22);
+  border-color: rgba(0, 201, 177, 0.45);
+}
+
+/* Custom scrollbars */
+::-webkit-scrollbar {
+  width: 8px;
+}
+::-webkit-scrollbar-track {
+  background: #F0EBF8;
+}
+::-webkit-scrollbar-thumb {
+  background: #3D2880;
+  border-radius: 9999px;
+}
+::-webkit-scrollbar-thumb:hover {
+  background: #2D1B69;
+}
