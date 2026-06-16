@@ -47,6 +47,14 @@
       "email": "99x@relaunchher.lk",
       "password": "$2a$10$I03wen.njtqftwYP/H11duvOEW5Tur5KIWm9XC1ugGdjG1IVKXCIq",
       "role": "EMPLOYER"
+    },
+    {
+      "id": "siim4lexdmap3t86gtpuh",
+      "createdAt": "2026-06-16T02:21:47.314Z",
+      "name": "Pooja Anbalagan",
+      "email": "poojaap356@gmail.com",
+      "password": "$2a$10$0ohgvIA5DEkHt8usNIWuSeLsNN.U/Jg1MJ/EwpbVLl2UvV0Nbra66",
+      "role": "RETURNER"
     }
   ],
   "profiles": [
@@ -63,6 +71,21 @@
       "gapReason": "Family (Maternity & Childcare)",
       "availability": "Full-time",
       "skillScore": 74
+    },
+    {
+      "id": "54g0vpd8ienrnw5l884oa9",
+      "userId": "siim4lexdmap3t86gtpuh",
+      "skills": [
+        "Data",
+        "DevOps",
+        "QA"
+      ],
+      "gapYears": 2,
+      "gapReason": "Family (Maternity & Childcare)",
+      "availability": "Weekends",
+      "skillScore": 74,
+      "cvUrl": "/uploads/cv-1781576660647-487361981.pdf",
+      "updatedAt": "2026-06-16T02:24:20.733Z"
     }
   ],
   "courses": [
@@ -193,6 +216,22 @@
       "moduleId": "t0jgxh9yhe7ri30ykd27wk",
       "completed": true,
       "completedAt": "2026-06-13T09:59:07.162Z"
+    },
+    {
+      "id": "ye68qed9gsonwjtpu5m4",
+      "createdAt": "2026-06-16T02:25:15.675Z",
+      "userId": "siim4lexdmap3t86gtpuh",
+      "moduleId": "3v5scb2ukfoaj11fg2pwl",
+      "completed": true,
+      "completedAt": "2026-06-16T02:25:15.665Z"
+    },
+    {
+      "id": "2be6k55h0536wraq216kk4",
+      "createdAt": "2026-06-16T02:25:17.938Z",
+      "userId": "siim4lexdmap3t86gtpuh",
+      "moduleId": "t0jgxh9yhe7ri30ykd27wk",
+      "completed": true,
+      "completedAt": "2026-06-16T02:25:17.934Z"
     }
   ],
   "jobs": [
