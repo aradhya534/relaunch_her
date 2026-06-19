@@ -13,9 +13,9 @@ export const ProgressRing: React.FC<ProgressRingProps> = ({
   percentage,
   size = 120,
   strokeWidth = 10,
-  color = '#00C9B1',      // brand.accent (electric teal)
-  trailColor = '#3D2880',  // brand.cardDark (deep track)
-  textColor = '#1A0F3D',   // default dark text
+  color = '#10B981',      // brand.accent (Mint Teal)
+  trailColor = '#E2E8F0', // slate-200 (clean light trail)
+  textColor = '#0F172A',  // brand.dark (Deep Slate Navy)
 }) => {
   const radius = (size - strokeWidth) / 2;
   const circumference = radius * 2 * Math.PI;

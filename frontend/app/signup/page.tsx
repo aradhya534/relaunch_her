@@ -5,7 +5,8 @@ import Link from 'next/link';
 import { useRouter, useSearchParams } from 'next/navigation';
 import { signIn } from 'next-auth/react';
 import { toast } from 'react-hot-toast';
-import { User, Mail, Lock, UserPlus, Sparkles, Building } from 'lucide-react';
+import { User, Mail, Lock, UserPlus, Sparkles, Building, ArrowLeft } from 'lucide-react';
+import { motion } from 'framer-motion';
 import Card from '@/components/ui/Card';
 import Button from '@/components/ui/Button';
 
@@ -54,7 +55,6 @@ function SignupForm() {
 
       toast.success('Registration successful! Logging in...');
 
-      // Auto login after signup
       const loginRes = await signIn('credentials', {
         email,
         password,
@@ -81,108 +81,155 @@ function SignupForm() {
   };
 
   return (
-    <div className="min-h-[calc(100vh-80px)] flex items-center justify-center bg-gradient-to-b from-[#1A0F3D] to-brand-primary p-4 py-12">
-      <div className="absolute top-0 right-0 w-80 h-80 bg-brand-accent/5 rounded-full blur-3xl" />
-      <div className="absolute bottom-0 left-0 w-80 h-80 bg-brand-highlight/5 rounded-full blur-3xl" />
+    <div className="min-h-[calc(100vh-64px)] flex items-center justify-center bg-brand-bgLight p-4 py-12 relative overflow-hidden">
+      {/* Subtle ambient glows */}
+      <div className="absolute top-0 right-0 w-[400px] h-[400px] bg-brand-primary/8 rounded-full blur-[100px] pointer-events-none" />
+      <div className="absolute bottom-0 left-0 w-[400px] h-[400px] bg-brand-accent/6 rounded-full blur-[100px] pointer-events-none" />
 
-      <Card variant="dark" className="w-full max-w-md glow-card-dark border border-brand-primary/40 p-8 relative z-10">
-        <div className="text-center mb-6">
-          <span className="h-12 w-12 rounded-xl bg-gradient-to-tr from-brand-accent to-brand-primary flex items-center justify-center font-serif text-3xl font-bold shadow-md shadow-brand-accent/20 border border-brand-accent/30 text-brand-dark mx-auto mb-4">
-            R
-          </span>
-          <h2 className="text-2xl font-bold font-serif text-white">Create Account</h2>
-          <p className="text-xs text-brand-bgLight/60 mt-2">Join Relaunch Her Sri Lanka</p>
-        </div>
+      <motion.div
+        initial={{ opacity: 0, y: 20 }}
+        animate={{ opacity: 1, y: 0 }}
+        transition={{ duration: 0.6 }}
+        className="w-full max-w-md relative z-10"
+      >
+        {/* Back Link */}
+        <Link
+          href="/"
+          className="inline-flex items-center space-x-2 text-xs font-bold uppercase tracking-wider text-brand-dark/50 hover:text-brand-primary mb-6 transition-colors"
+        >
+          <ArrowLeft className="w-4 h-4" />
+          <span>Back to Home</span>
+        </Link>
 
-        {/* Role Toggle Selector */}
-        <div className="grid grid-cols-2 gap-3 mb-6 bg-brand-primary/40 p-1.5 rounded-xl border border-brand-bgLight/10">
-          <button
-            type="button"
-            onClick={() => setRole('RETURNER')}
-            className={`py-2 px-3 rounded-lg text-xs font-bold transition-all flex items-center justify-center space-x-1.5 ${
-              role === 'RETURNER'
-                ? 'bg-brand-accent text-brand-dark shadow'
-                : 'text-brand-bgLight/60 hover:text-white'
-            }`}
-          >
-            <Sparkles className="w-3.5 h-3.5" />
-            <span>I am a Returner</span>
-          </button>
-          <button
-            type="button"
-            onClick={() => setRole('EMPLOYER')}
-            className={`py-2 px-3 rounded-lg text-xs font-bold transition-all flex items-center justify-center space-x-1.5 ${
-              role === 'EMPLOYER'
-                ? 'bg-brand-accent text-brand-dark shadow'
-                : 'text-brand-bgLight/60 hover:text-white'
-            }`}
-          >
-            <Building className="w-3.5 h-3.5" />
-            <span>I am an Employer</span>
-          </button>
-        </div>
-
-        <form onSubmit={handleSubmit} className="space-y-4">
-          <div className="space-y-1">
-            <label className="text-xs font-semibold text-brand-bgLight/80">Full Name</label>
-            <div className="relative">
-              <User className="absolute left-3.5 top-3.5 h-4 w-4 text-brand-bgLight/40" />
-              <input
-                type="text"
-                placeholder="Aradhya Perera"
-                value={name}
-                onChange={(e) => setName(e.target.value)}
-                className="w-full pl-11 pr-4 py-3 bg-brand-primary/50 text-white rounded-xl border border-brand-bgLight/10 focus:border-brand-accent focus:outline-none text-sm transition-colors"
-                disabled={isLoading}
-              />
+        <Card variant="light" className="glow-card bg-white border border-brand-bgLight/60 p-8 sm:p-10 rounded-3xl">
+          {/* Logo */}
+          <div className="text-center mb-6">
+            <div className="flex items-center justify-center mb-4">
+              <span className="font-serif text-2xl font-black tracking-tight flex items-center text-brand-dark">
+                Relaunch
+                <span className="text-brand-primary ml-1">Her</span>
+                <span className="inline-block w-2 h-2 rounded-full bg-brand-accent ml-1" />
+              </span>
             </div>
+            <h2 className="text-2xl font-bold font-serif text-brand-dark tracking-tight">Create Account</h2>
+            <p className="text-xs text-brand-dark/50 mt-1">Join Relaunch Her Sri Lanka</p>
           </div>
 
-          <div className="space-y-1">
-            <label className="text-xs font-semibold text-brand-bgLight/80">Email Address</label>
-            <div className="relative">
-              <Mail className="absolute left-3.5 top-3.5 h-4 w-4 text-brand-bgLight/40" />
-              <input
-                type="email"
-                placeholder="email@relaunchher.lk"
-                value={email}
-                onChange={(e) => setEmail(e.target.value)}
-                className="w-full pl-11 pr-4 py-3 bg-brand-primary/50 text-white rounded-xl border border-brand-bgLight/10 focus:border-brand-accent focus:outline-none text-sm transition-colors"
-                disabled={isLoading}
-              />
+          {/* Role Toggle Selector */}
+          <div className="relative grid grid-cols-2 gap-1 mb-6 bg-brand-bgLight p-1 rounded-xl border border-brand-bgLight/80">
+            <button
+              type="button"
+              onClick={() => setRole('RETURNER')}
+              className={`relative z-10 py-2.5 px-3 rounded-lg text-xs font-bold transition-all flex items-center justify-center space-x-1.5 ${
+                role === 'RETURNER'
+                  ? 'text-brand-dark font-extrabold'
+                  : 'text-brand-dark/50 hover:text-brand-dark'
+              }`}
+            >
+              <Sparkles className="w-3.5 h-3.5" />
+              <span>I am a Returner</span>
+              {role === 'RETURNER' && (
+                <motion.span
+                  layoutId="roleToggleHighlight"
+                  className="absolute inset-0 bg-white border border-brand-bgLight/80 rounded-lg z-[-1] shadow-sm"
+                  transition={{ type: 'spring', stiffness: 350, damping: 28 }}
+                />
+              )}
+            </button>
+
+            <button
+              type="button"
+              onClick={() => setRole('EMPLOYER')}
+              className={`relative z-10 py-2.5 px-3 rounded-lg text-xs font-bold transition-all flex items-center justify-center space-x-1.5 ${
+                role === 'EMPLOYER'
+                  ? 'text-brand-dark font-extrabold'
+                  : 'text-brand-dark/50 hover:text-brand-dark'
+              }`}
+            >
+              <Building className="w-3.5 h-3.5" />
+              <span>I am an Employer</span>
+              {role === 'EMPLOYER' && (
+                <motion.span
+                  layoutId="roleToggleHighlight"
+                  className="absolute inset-0 bg-white border border-brand-bgLight/80 rounded-lg z-[-1] shadow-sm"
+                  transition={{ type: 'spring', stiffness: 350, damping: 28 }}
+                />
+              )}
+            </button>
+          </div>
+
+          <form onSubmit={handleSubmit} className="space-y-4">
+            {/* Name input */}
+            <div className="space-y-1.5 text-left">
+              <label className="text-[10px] uppercase font-black tracking-widest text-brand-dark/60">Full Name</label>
+              <div className="relative">
+                <User className="absolute left-3.5 top-3.5 h-4 w-4 text-brand-dark/30" />
+                <input
+                  type="text"
+                  placeholder="Aradhya Perera"
+                  value={name}
+                  onChange={(e) => setName(e.target.value)}
+                  className="w-full pl-10 pr-4 py-3 bg-brand-bgLight/40 text-brand-dark rounded-xl border border-brand-bgLight focus:border-brand-primary focus:outline-none text-xs font-semibold transition-all placeholder:text-brand-dark/30 focus:ring-2 focus:ring-brand-primary/10"
+                  disabled={isLoading}
+                />
+              </div>
             </div>
-          </div>
 
-          <div className="space-y-1">
-            <label className="text-xs font-semibold text-brand-bgLight/80">Password</label>
-            <div className="relative">
-              <Lock className="absolute left-3.5 top-3.5 h-4 w-4 text-brand-bgLight/40" />
-              <input
-                type="password"
-                placeholder="Min. 6 characters"
-                value={password}
-                onChange={(e) => setPassword(e.target.value)}
-                className="w-full pl-11 pr-4 py-3 bg-brand-primary/50 text-white rounded-xl border border-brand-bgLight/10 focus:border-brand-accent focus:outline-none text-sm transition-colors"
-                disabled={isLoading}
-              />
+            {/* Email input */}
+            <div className="space-y-1.5 text-left">
+              <label className="text-[10px] uppercase font-black tracking-widest text-brand-dark/60">Email Address</label>
+              <div className="relative">
+                <Mail className="absolute left-3.5 top-3.5 h-4 w-4 text-brand-dark/30" />
+                <input
+                  type="email"
+                  placeholder="email@relaunchher.lk"
+                  value={email}
+                  onChange={(e) => setEmail(e.target.value)}
+                  className="w-full pl-10 pr-4 py-3 bg-brand-bgLight/40 text-brand-dark rounded-xl border border-brand-bgLight focus:border-brand-primary focus:outline-none text-xs font-semibold transition-all placeholder:text-brand-dark/30 focus:ring-2 focus:ring-brand-primary/10"
+                  disabled={isLoading}
+                />
+              </div>
             </div>
-          </div>
 
-          <div className="pt-2">
-            <Button variant="primary" size="md" fullWidth type="submit" disabled={isLoading} className="flex items-center justify-center space-x-2">
-              <UserPlus className="h-4 w-4" />
-              <span>{isLoading ? 'Creating Account...' : 'Sign Up'}</span>
-            </Button>
-          </div>
-        </form>
+            {/* Password input */}
+            <div className="space-y-1.5 text-left">
+              <label className="text-[10px] uppercase font-black tracking-widest text-brand-dark/60">Password</label>
+              <div className="relative">
+                <Lock className="absolute left-3.5 top-3.5 h-4 w-4 text-brand-dark/30" />
+                <input
+                  type="password"
+                  placeholder="Min. 6 characters"
+                  value={password}
+                  onChange={(e) => setPassword(e.target.value)}
+                  className="w-full pl-10 pr-4 py-3 bg-brand-bgLight/40 text-brand-dark rounded-xl border border-brand-bgLight focus:border-brand-primary focus:outline-none text-xs font-semibold transition-all placeholder:text-brand-dark/30 focus:ring-2 focus:ring-brand-primary/10"
+                  disabled={isLoading}
+                />
+              </div>
+            </div>
 
-        <div className="mt-6 text-center text-xs text-brand-bgLight/50">
-          Already have an account?{' '}
-          <Link href="/login" className="text-brand-accent font-bold hover:underline">
-            Log In
-          </Link>
-        </div>
-      </Card>
+            <div className="pt-2">
+              <Button
+                variant="secondary"
+                size="lg"
+                fullWidth
+                type="submit"
+                disabled={isLoading}
+                className="flex items-center justify-center space-x-2 font-bold py-3.5 shadow-md shadow-brand-primary/10"
+              >
+                <UserPlus className="h-4 w-4" />
+                <span>{isLoading ? 'Creating Account...' : 'Sign Up'}</span>
+              </Button>
+            </div>
+          </form>
+
+          <div className="mt-8 text-center text-xs text-brand-dark/40 border-t border-brand-bgLight pt-6 font-semibold">
+            Already have an account?{' '}
+            <Link href="/login" className="text-brand-primary font-bold hover:underline">
+              Log In
+            </Link>
+          </div>
+        </Card>
+      </motion.div>
     </div>
   );
 }
@@ -190,7 +237,7 @@ function SignupForm() {
 export default function SignupPage() {
   return (
     <Suspense fallback={
-      <div className="min-h-screen flex items-center justify-center bg-[#1A0F3D] text-white">
+      <div className="min-h-screen flex items-center justify-center bg-brand-bgLight text-brand-dark/50 text-sm">
         Loading Registration...
       </div>
     }>

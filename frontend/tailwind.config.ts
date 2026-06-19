@@ -12,12 +12,12 @@ const config: Config = {
         background: "var(--background)",
         foreground: "var(--foreground)",
         brand: {
-          primary: "#2D1B69",      // Deep indigo
-          accent: "#00C9B1",       // Electric teal
-          highlight: "#F5A623",    // Warm gold
-          bgLight: "#F0EBF8",      // Lavender white
-          dark: "#1A0F3D",         // Dark text
-          cardDark: "#3D2880",     // Card bg dark
+          primary: "#4F46E5",      // Slate Indigo
+          accent: "#10B981",       // Mint Teal (Emerald)
+          highlight: "#FF6B6B",    // Electric Coral
+          bgLight: "#F8FAFC",      // Slate Ice
+          dark: "#0F172A",         // Deep Slate Navy
+          cardDark: "#1E293B",     // Slate Blue-Grey
         },
       },
       fontFamily: {

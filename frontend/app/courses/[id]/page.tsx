@@ -5,7 +5,8 @@ import { useParams, useRouter } from 'next/navigation';
 import Link from 'next/link';
 import { useSession } from 'next-auth/react';
 import { toast } from 'react-hot-toast';
-import { Play, CheckSquare, Square, ChevronRight, BookOpen, ArrowLeft, Loader2 } from 'lucide-react';
+import { Play, CheckSquare, Square, ChevronRight, BookOpen, ArrowLeft, Loader2, Sparkles, CheckCircle } from 'lucide-react';
+import { motion, AnimatePresence } from 'framer-motion';
 import Card from '@/components/ui/Card';
 import Button from '@/components/ui/Button';
 import Badge from '@/components/ui/Badge';
@@ -46,7 +47,6 @@ export default function CoursePlayerPage() {
 
       setCourse(data);
       
-      // Select first incomplete module if available, otherwise first module
       const firstIncomplete = data.modules.findIndex((m: any) => !m.completed);
       if (firstIncomplete !== -1) {
         setActiveModuleIndex(firstIncomplete);
@@ -85,7 +85,6 @@ export default function CoursePlayerPage() {
         throw new Error(data.error || 'Failed to update progress.');
       }
 
-      // Update local state
       setCourse((prev: any) => {
         const updatedModules = prev.modules.map((m: any) => {
           if (m.id === moduleId) {
@@ -104,7 +103,6 @@ export default function CoursePlayerPage() {
       if (!currentStatus) {
         toast.success('Module marked as completed!');
         
-        // If completed from the main big button, automatically advance to next module
         if (isMainAction && activeModuleIndex < course.modules.length - 1) {
           setActiveModuleIndex((prev) => prev + 1);
         }
@@ -120,7 +118,7 @@ export default function CoursePlayerPage() {
   if (isLoading) {
     return (
       <div className="min-h-[60vh] flex items-center justify-center">
-        <Loader2 className="w-10 h-10 animate-spin text-brand-primary" />
+        <Loader2 className="w-8 h-8 animate-spin text-brand-primary" />
       </div>
     );
   }
@@ -137,34 +135,35 @@ export default function CoursePlayerPage() {
   const activeModule = course.modules[activeModuleIndex];
 
   return (
-    <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
+    <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8 text-left">
       {/* Top Header Row */}
-      <div className="mb-6 flex flex-col md:flex-row items-start md:items-center justify-between gap-4">
+      <div className="mb-6 flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4 border-b border-brand-bgLight/40 pb-4">
         <button
           onClick={() => router.push('/dashboard')}
-          className="flex items-center space-x-2 text-xs font-semibold text-brand-dark/50 hover:text-brand-primary transition-colors"
+          className="flex items-center space-x-2 text-xs font-bold uppercase tracking-wider text-brand-dark/50 hover:text-brand-primary transition-colors"
         >
           <ArrowLeft className="w-4 h-4" />
           <span>Back to Dashboard</span>
         </button>
-        <div className="flex items-center space-x-3">
-          <Badge variant="indigo">{course.level}</Badge>
-          <span className="text-xs font-bold text-brand-dark/40">{course.duration}</span>
+        <div className="flex items-center space-x-3 text-xs">
+          <Badge variant="indigo" className="py-0.5 px-2.5 rounded-lg border border-brand-primary/10 bg-brand-primary/5">{course.level}</Badge>
+          <span className="font-bold text-brand-dark/45">{course.duration}</span>
         </div>
       </div>
 
       {/* Course Title and Global Progress Bar */}
-      <div className="mb-8 bg-white rounded-2xl p-6 border border-brand-bgLight/80 shadow-sm">
+      <div className="mb-8 bg-white rounded-3xl p-6 border border-brand-bgLight/40 shadow-sm">
         <div className="flex items-center justify-between mb-4">
-          <h1 className="text-2xl md:text-3xl font-bold font-serif text-brand-primary">{course.title}</h1>
-          <span className="text-sm font-bold text-brand-primary">{course.progressPercentage}% Complete</span>
+          <h1 className="text-xl sm:text-2xl font-black font-serif text-brand-primary">{course.title}</h1>
+          <span className="text-xs font-black uppercase tracking-wider text-brand-primary">{course.progressPercentage}% Complete</span>
         </div>
         
-        {/* Progress bar container */}
-        <div className="w-full bg-brand-bgLight rounded-full h-3.5 overflow-hidden">
-          <div
-            className="bg-brand-accent h-full rounded-full transition-all duration-1000 ease-out"
-            style={{ width: `${course.progressPercentage}%` }}
+        <div className="w-full bg-brand-bgLight/50 rounded-full h-3 overflow-hidden border border-brand-bgLight/20">
+          <motion.div
+            className="bg-brand-accent h-full rounded-full"
+            initial={{ width: 0 }}
+            animate={{ width: `${course.progressPercentage}%` }}
+            transition={{ duration: 0.8, ease: 'easeOut' }}
           />
         </div>
       </div>
@@ -173,8 +172,8 @@ export default function CoursePlayerPage() {
       <div className="flex flex-col lg:flex-row gap-8">
         {/* Left Sidebar: Modules checkboxes */}
         <aside className="w-full lg:w-80 flex-shrink-0 order-2 lg:order-1">
-          <Card variant="light" className="glow-card p-6">
-            <h3 className="text-sm font-bold uppercase tracking-wider text-brand-dark/40 mb-4 flex items-center space-x-2">
+          <Card variant="light" className="glow-card p-6 bg-white border border-brand-bgLight/40 rounded-3xl">
+            <h3 className="text-xs font-black uppercase tracking-widest text-brand-dark/40 mb-4 flex items-center space-x-2">
               <BookOpen className="w-4 h-4" />
               <span>Syllabus modules</span>
             </h3>
@@ -183,16 +182,16 @@ export default function CoursePlayerPage() {
               {course.modules.map((mod: any, index: number) => {
                 const isActive = index === activeModuleIndex;
                 return (
-                  <div
+                  <motion.div
                     key={mod.id}
+                    whileHover={{ scale: 1.01 }}
                     onClick={() => setActiveModuleIndex(index)}
-                    className={`p-3.5 rounded-xl border transition-all cursor-pointer flex items-start space-x-3 ${
+                    className={`p-3.5 rounded-2xl border transition-all cursor-pointer flex items-start space-x-3 text-left ${
                       isActive
-                        ? 'bg-brand-primary text-brand-bgLight border-brand-primary font-bold shadow'
-                        : 'bg-brand-bgLight/10 border-brand-bgLight hover:bg-brand-bgLight/40'
+                        ? 'bg-brand-primary text-brand-bgLight border-brand-primary font-bold shadow-md shadow-brand-primary/15'
+                        : 'bg-brand-bgLight/10 border-brand-bgLight/60 hover:bg-brand-bgLight/30'
                     }`}
                   >
-                    {/* Toggle checkmark */}
                     <button
                       type="button"
                       disabled={isUpdating}
@@ -205,13 +204,13 @@ export default function CoursePlayerPage() {
                       {mod.completed ? (
                         <CheckSquare className="w-4.5 h-4.5 fill-brand-accent text-brand-dark" />
                       ) : (
-                        <Square className={`w-4.5 h-4.5 ${isActive ? 'text-brand-bgLight/40' : 'text-brand-dark/30'}`} />
+                        <Square className={`w-4.5 h-4.5 ${isActive ? 'text-white/40' : 'text-brand-dark/30'}`} />
                       )}
                     </button>
-                    <div className="text-xs text-left leading-snug">
+                    <div className="text-xs leading-snug font-semibold">
                       {mod.title}
                     </div>
-                  </div>
+                  </motion.div>
                 );
               })}
             </div>
@@ -221,41 +220,47 @@ export default function CoursePlayerPage() {
         {/* Main Area: Video Player & Description content */}
         <main className="flex-grow order-1 lg:order-2 space-y-6">
           {/* Styled Video Player card */}
-          <div className="relative aspect-video rounded-3xl bg-gradient-to-tr from-brand-primary to-brand-cardDark border border-brand-primary/20 shadow-xl overflow-hidden flex flex-col items-center justify-center text-center p-6 text-brand-bgLight">
+          <div className="relative aspect-video rounded-3xl bg-gradient-to-tr from-brand-dark to-brand-cardDark border border-white/5 shadow-xl overflow-hidden flex flex-col items-center justify-center text-center p-6 text-brand-bgLight">
             <div className="absolute inset-0 bg-black/10 z-0" />
-            <button className="h-16 w-16 md:h-20 md:w-20 rounded-full bg-brand-accent text-brand-dark flex items-center justify-center shadow-lg shadow-brand-accent/25 hover:scale-[1.05] transition-all relative z-10">
-              <Play className="h-8 w-8 fill-brand-dark ml-1" />
-            </button>
-            <div className="mt-4 relative z-10">
-              <p className="text-xs uppercase tracking-widest text-brand-accent font-bold">Now Playing</p>
-              <h4 className="text-sm md:text-base font-semibold mt-1 opacity-90 max-w-md mx-auto">{activeModule.title}</h4>
+            <motion.button 
+              whileHover={{ scale: 1.05 }}
+              whileTap={{ scale: 0.95 }}
+              className="h-16 w-16 md:h-18 md:w-18 rounded-full bg-brand-accent text-brand-dark flex items-center justify-center shadow-lg shadow-brand-accent/20 hover:shadow-brand-accent/30 relative z-10"
+            >
+              <Play className="h-6 w-6 fill-brand-dark ml-1" />
+            </motion.button>
+            <div className="mt-4 relative z-10 space-y-1">
+              <p className="text-[9px] uppercase tracking-widest text-brand-accent font-black">Now Refreshing</p>
+              <h4 className="text-xs md:text-sm font-semibold opacity-90 max-w-md mx-auto">{activeModule.title}</h4>
             </div>
           </div>
 
           {/* Lesson Details and text */}
-          <Card variant="light" className="glow-card p-8">
-            <div className="flex flex-col md:flex-row items-start md:items-center justify-between gap-4 mb-6 pb-6 border-b border-brand-bgLight">
-              <div>
-                <span className="text-xs font-bold text-brand-accent uppercase tracking-wider">Module {activeModule.order} of {course.modules.length}</span>
-                <h2 className="text-xl font-bold font-serif text-brand-primary mt-1">{activeModule.title}</h2>
+          <Card variant="light" className="glow-card p-8 bg-white border border-brand-bgLight/40 rounded-3xl">
+            <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4 mb-6 pb-6 border-b border-brand-bgLight/40">
+              <div className="space-y-1">
+                <span className="text-[10px] font-black text-brand-accent uppercase tracking-widest">Module {activeModule.order} of {course.modules.length}</span>
+                <h2 className="text-lg sm:text-xl font-bold font-serif text-brand-primary">{activeModule.title}</h2>
               </div>
               
-              {/* Mark Complete action */}
               <Button
                 variant={activeModule.completed ? 'outline' : 'primary'}
                 size="sm"
                 onClick={() => handleToggleModule(activeModule.id, activeModule.completed, true)}
                 disabled={isUpdating}
-                className="w-full md:w-auto shrink-0 flex items-center justify-center space-x-1.5"
+                className="w-full sm:w-auto shrink-0 flex items-center justify-center space-x-1.5 font-bold py-2.5 rounded-xl text-xs"
               >
-                <span>{activeModule.completed ? 'Mark Incomplete' : 'Mark Complete & Continue'}</span>
+                <span>{activeModule.completed ? 'Mark Incomplete' : 'Complete & Advance'}</span>
                 <ChevronRight className="w-4 h-4" />
               </Button>
             </div>
 
-            <div>
-              <h3 className="text-sm font-bold text-brand-primary mb-3">Lesson Description</h3>
-              <p className="text-sm text-brand-dark/75 leading-relaxed bg-brand-bgLight/15 p-4 rounded-2xl border border-brand-bgLight/40">
+            <div className="space-y-3">
+              <div className="flex items-center space-x-1 text-brand-primary">
+                <Sparkles className="w-4 h-4 text-brand-accent animate-pulse" />
+                <h3 className="text-xs font-black uppercase tracking-widest">Lesson Description</h3>
+              </div>
+              <p className="text-xs text-brand-dark/75 leading-relaxed bg-brand-bgLight/10 p-5 rounded-2xl border border-brand-bgLight/30 font-medium">
                 {activeModule.content}
               </p>
             </div>
