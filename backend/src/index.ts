@@ -50,3 +50,19 @@ app.listen(PORT, () => {
   console.log(`🚀 Relaunch Her Backend running on http://localhost:${PORT}`);
   console.log(`📁 Uploads served statically at http://localhost:${PORT}/uploads`);
 });
+
+// backend/index.js
+const { Pool } = require('pg');
+
+const pool = new Pool({
+  connectionString: process.env.DATABASE_URL,
+  ssl: {
+    rejectUnauthorized: false  // Required for Supabase
+  }
+});
+
+// Test connection on startup
+pool.query('SELECT NOW()', (err, res) => {
+  if (err) console.error('❌ DB Error:', err);
+  else console.log('✅ Connected to Supabase!');
+});
