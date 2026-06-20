@@ -20,7 +20,7 @@ export const Button: React.FC<ButtonProps> = ({
     primary: 'bg-brand-accent text-brand-dark hover:opacity-90 hover:scale-[1.01] shadow-lg shadow-brand-accent/20',
     secondary: 'bg-brand-primary text-brand-bgLight hover:bg-opacity-90 hover:scale-[1.01]',
     outline: 'border-2 border-brand-accent text-brand-accent hover:bg-brand-accent hover:text-brand-dark hover:scale-[1.01] bg-transparent',
-    ghost: 'text-brand-bgLight hover:bg-brand-cardDark hover:text-brand-accent',
+    ghost: 'text-brand-dark/60 hover:bg-brand-bgLight hover:text-brand-dark',
   };
 
   const sizes = {

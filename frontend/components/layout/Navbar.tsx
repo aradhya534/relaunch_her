@@ -34,9 +34,8 @@ export const Navbar = () => {
 
   const isActive = (href: string) => pathname === href;
 
-  // Determine if this is a dark theme page
-  // Only the landing page (/) has a dark hero — auth pages are now light-themed
-  const isDarkPage = pathname === '/';
+  // The whole website is now light-themed for consistent layout
+  const isDarkPage = false;
 
   return (
     <header 
@@ -53,10 +52,10 @@ export const Navbar = () => {
             <Link href="/" className="flex items-center space-x-2 group">
               <span className="font-serif text-xl font-black tracking-tight flex items-center">
                 Relaunch
-                <span className={`ml-1 ${isDarkPage ? 'text-brand-accent' : 'text-brand-primary'}`}>
+                <span className="ml-1 text-brand-primary">
                   Her
                 </span>
-                <span className={`inline-block w-1.5 h-1.5 rounded-full ml-1 ${isDarkPage ? 'bg-brand-accent' : 'bg-brand-primary'}`} />
+                <span className="inline-block w-1.5 h-1.5 rounded-full ml-1 bg-brand-accent" />
               </span>
             </Link>
           </div>

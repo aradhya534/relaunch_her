@@ -5,7 +5,7 @@ import Link from 'next/link';
 import { useRouter } from 'next/navigation';
 import { useSession } from 'next-auth/react';
 import { toast } from 'react-hot-toast';
-import { Sparkles, BookOpen, User, Briefcase, ChevronRight, CheckCircle2, Award, Mail, ArrowUpRight } from 'lucide-react';
+import { Sparkles, BookOpen, User, Briefcase, ChevronRight, CheckCircle2, Award, Mail, ArrowUpRight, FileText, ArrowRight } from 'lucide-react';
 import { motion } from 'framer-motion';
 import Card from '@/components/ui/Card';
 import Button from '@/components/ui/Button';
@@ -104,7 +104,7 @@ export default function ReturnerDashboard() {
   };
 
   // Determine if assessment is completed
-  const hasAssessment = profile && profile.gapYears > 0;
+  const hasAssessment = profile && profile.skillScore != null && profile.gapYears > 0;
 
   return (
     <motion.div 
@@ -132,25 +132,58 @@ export default function ReturnerDashboard() {
 
       {!hasAssessment ? (
         /* Uncompleted Assessment Banner */
-        <motion.div variants={itemVariants}>
-          <Card variant="dark" className="glow-card-dark bg-gradient-to-r from-brand-dark to-brand-cardDark text-brand-bgLight p-10 flex flex-col md:flex-row items-center justify-between mb-12 rounded-3xl relative overflow-hidden border border-white/5">
-            <div className="absolute top-0 right-0 w-80 h-80 bg-brand-accent/10 rounded-full blur-[80px] pointer-events-none" />
-            <div className="relative z-10 max-w-xl mb-6 md:mb-0 space-y-3">
-              <Badge variant="gold" className="py-1 px-3 rounded-lg border border-brand-highlight/20 bg-brand-highlight/10 text-[10px] font-black uppercase tracking-widest">
-                Action Required
-              </Badge>
-              <h3 className="text-2xl font-bold font-serif text-white">Complete Your Skills Assessment</h3>
-              <p className="text-xs text-brand-bgLight/70 leading-relaxed font-medium">
-                Upload your CV, confirm your competencies, and specify your availability. This unlocks targeted course recommendations and displays your match index on the job placement board.
-              </p>
+        <motion.div variants={itemVariants} className="mb-12">
+          <div className="relative bg-white border border-brand-bgLight/80 rounded-3xl overflow-hidden shadow-sm">
+            {/* Left accent stripe */}
+            <div className="absolute left-0 top-0 bottom-0 w-1 bg-gradient-to-b from-brand-primary to-brand-accent rounded-l-3xl" />
+
+            <div className="pl-8 pr-6 py-7 flex flex-col md:flex-row items-start md:items-center justify-between gap-6">
+              {/* Left: Icon + Text */}
+              <div className="flex items-start space-x-5">
+                <div className="h-12 w-12 rounded-2xl bg-brand-primary/8 border border-brand-primary/12 flex items-center justify-center shrink-0 mt-0.5">
+                  <FileText className="w-5 h-5 text-brand-primary" />
+                </div>
+                <div className="space-y-1.5">
+                  <div className="flex items-center space-x-2">
+                    <span className="text-[9px] uppercase font-black tracking-widest text-brand-primary bg-brand-primary/8 border border-brand-primary/15 px-2.5 py-1 rounded-lg">
+                      Action Required
+                    </span>
+                  </div>
+                  <h3 className="text-lg font-black font-serif text-brand-dark leading-tight">
+                    Complete Your Skills Assessment
+                  </h3>
+                  <p className="text-xs text-brand-dark/55 leading-relaxed font-medium max-w-lg">
+                    Upload your CV, confirm your competencies, and specify your availability to unlock course recommendations and your job match index.
+                  </p>
+
+                  {/* Step mini-indicators */}
+                  <div className="flex items-center space-x-3 pt-1">
+                    {['Upload CV', 'Select Skills', 'Gap Details'].map((step, i) => (
+                      <div key={step} className="flex items-center space-x-1">
+                        <div className="h-4 w-4 rounded-full bg-brand-bgLight border border-brand-bgLight/80 flex items-center justify-center">
+                          <span className="text-[8px] font-black text-brand-dark/40">{i + 1}</span>
+                        </div>
+                        <span className="text-[9px] font-semibold text-brand-dark/40">{step}</span>
+                        {i < 2 && <div className="w-3 h-px bg-brand-bgLight/80" />}
+                      </div>
+                    ))}
+                  </div>
+                </div>
+              </div>
+
+              {/* Right: CTA Button */}
+              <Link href="/assessment" className="shrink-0">
+                <motion.div
+                  whileHover={{ scale: 1.02 }}
+                  whileTap={{ scale: 0.98 }}
+                  className="flex items-center space-x-2.5 bg-brand-primary text-white px-6 py-3.5 rounded-2xl font-bold text-sm shadow-md shadow-brand-primary/20 hover:bg-brand-primary/90 transition-colors cursor-pointer"
+                >
+                  <span>Start Assessment</span>
+                  <ArrowRight className="w-4 h-4" />
+                </motion.div>
+              </Link>
             </div>
-            <Link href="/assessment" className="relative z-10">
-              <Button variant="primary" size="lg" className="flex items-center space-x-2 text-brand-dark bg-brand-accent hover:bg-brand-accent/90 transition-all shadow-md shadow-brand-accent/15 px-6 py-3.5 rounded-xl font-bold">
-                <span>Take Assessment</span>
-                <ChevronRight className="w-4 h-4" />
-              </Button>
-            </Link>
-          </Card>
+          </div>
         </motion.div>
       ) : (
         /* Completed Assessment Bento Dashboard View */
@@ -198,7 +231,7 @@ export default function ReturnerDashboard() {
                         <p className="text-xs text-brand-dark/50 mt-0.5 font-medium">{job.companyName} &middot; {job.workType}</p>
                       </div>
                       <div className="flex items-center space-x-3 w-full sm:w-auto justify-between sm:justify-end shrink-0">
-                        <Badge variant="gold" className="py-1 px-3 border border-brand-highlight/25 bg-brand-highlight/10 text-xs font-bold">{job.matchScore}% Match</Badge>
+                        <Badge variant="teal" className="py-1 px-3 border border-brand-accent/20 bg-brand-accent/10 text-xs font-bold">{job.matchScore}% Match</Badge>
                         <Link href="/jobs">
                           <Button variant="outline" size="sm" className="px-3.5 py-1.5 text-[10px] font-bold rounded-lg border border-brand-primary/20 text-brand-primary hover:bg-brand-primary hover:text-white">View Match</Button>
                         </Link>
@@ -223,27 +256,44 @@ export default function ReturnerDashboard() {
           <h2 className="text-xl font-bold font-serif text-brand-primary">Recommended Upskilling Paths</h2>
         </div>
 
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
-          {courses.map((course) => (
-            <Card key={course.id} variant="light" className="glow-card flex flex-col justify-between p-6 bg-white border border-brand-bgLight/40 rounded-3xl h-full">
-              <div className="text-left space-y-3">
-                <Badge variant="indigo" className="text-[10px] font-black uppercase tracking-wider py-0.5 px-2.5 rounded-lg border border-brand-primary/20 bg-brand-primary/10">{course.level}</Badge>
-                <h3 className="text-lg font-bold font-serif text-brand-primary leading-snug">{course.title}</h3>
-                <p className="text-xs text-brand-dark/60 leading-relaxed font-medium line-clamp-3">{course.description}</p>
-              </div>
+        {courses.length === 0 ? (
+          <Card variant="light" className="p-10 text-center bg-white border border-brand-bgLight/40 rounded-3xl">
+            <BookOpen className="w-10 h-10 text-brand-primary/15 mx-auto mb-4" />
+            <h3 className="font-bold text-brand-primary text-base mb-1">No Courses Loaded Yet</h3>
+            <p className="text-xs text-brand-dark/50 max-w-xs mx-auto font-medium">
+              Complete your skills assessment first. Our engine will then recommend tailored upskilling paths for your profile.
+            </p>
+            {!hasAssessment && (
+              <Link href="/assessment" className="inline-block mt-4">
+                <Button variant="primary" size="sm" className="text-xs px-5 py-2.5 font-bold bg-brand-accent text-brand-dark rounded-xl">
+                  Start Assessment
+                </Button>
+              </Link>
+            )}
+          </Card>
+        ) : (
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+            {courses.map((course) => (
+              <Card key={course.id} variant="light" className="glow-card flex flex-col justify-between p-6 bg-white border border-brand-bgLight/40 rounded-3xl h-full">
+                <div className="text-left space-y-3">
+                  <Badge variant="indigo" className="text-[10px] font-black uppercase tracking-wider py-0.5 px-2.5 rounded-lg border border-brand-primary/20 bg-brand-primary/10">{course.level}</Badge>
+                  <h3 className="text-lg font-bold font-serif text-brand-primary leading-snug">{course.title}</h3>
+                  <p className="text-xs text-brand-dark/60 leading-relaxed font-medium line-clamp-3">{course.description}</p>
+                </div>
 
-              <div className="border-t border-brand-bgLight pt-4 flex items-center justify-between mt-6">
-                <span className="text-xs font-semibold text-brand-dark/40">{course.duration}</span>
-                <Link href={`/courses/${course.id}`}>
-                  <Button variant="outline" size="sm" className="text-xs px-4 py-2 font-bold text-brand-accent border-brand-accent/30 hover:bg-brand-accent hover:text-brand-dark rounded-xl flex items-center space-x-1">
-                    <span>Start Path</span>
-                    <ArrowUpRight className="w-3.5 h-3.5" />
-                  </Button>
-                </Link>
-              </div>
-            </Card>
-          ))}
-        </div>
+                <div className="border-t border-brand-bgLight pt-4 flex items-center justify-between mt-6">
+                  <span className="text-xs font-semibold text-brand-dark/40">{course.duration}</span>
+                  <Link href={`/courses/${course.id}`}>
+                    <Button variant="outline" size="sm" className="text-xs px-4 py-2 font-bold text-brand-accent border-brand-accent/30 hover:bg-brand-accent hover:text-brand-dark rounded-xl flex items-center space-x-1">
+                      <span>Start Path</span>
+                      <ArrowUpRight className="w-3.5 h-3.5" />
+                    </Button>
+                  </Link>
+                </div>
+              </Card>
+            ))}
+          </div>
+        )}
       </motion.section>
 
       {/* Mentor Match Section */}

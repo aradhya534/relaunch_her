@@ -55,6 +55,22 @@
       "email": "poojaap356@gmail.com",
       "password": "$2a$10$0ohgvIA5DEkHt8usNIWuSeLsNN.U/Jg1MJ/EwpbVLl2UvV0Nbra66",
       "role": "RETURNER"
+    },
+    {
+      "id": "ojjswxl2ycf6r1zu25bga",
+      "createdAt": "2026-06-20T03:05:48.043Z",
+      "name": "Aradhya Jayawardhane",
+      "email": "22cds0412@ms.sab.ac.lk",
+      "password": "$2a$10$1nRdiINjx15gsqhgWGxJh.kW4ed6IYJ6YX8AULp.Pxzpk9PHUv3Wy",
+      "role": "EMPLOYER"
+    },
+    {
+      "id": "v1y7lallsrhctw917mc7",
+      "createdAt": "2026-06-20T03:11:09.405Z",
+      "name": "John Depp",
+      "email": "john123@gmail.com",
+      "password": "$2a$10$8tCBHWyPJXAzOHdiqjtSFu.N760zmSpwEK0TyBICWJo83ruPnhmNS",
+      "role": "RETURNER"
     }
   ],
   "profiles": [
@@ -86,6 +102,15 @@
       "skillScore": 74,
       "cvUrl": "/uploads/cv-1781576660647-487361981.pdf",
       "updatedAt": "2026-06-16T02:24:20.733Z"
+    },
+    {
+      "id": "hotb7x7zhs9h5rophi5jcs",
+      "userId": "v1y7lallsrhctw917mc7",
+      "skills": [],
+      "gapYears": 0,
+      "gapReason": "",
+      "availability": "",
+      "skillScore": 0
     }
   ],
   "courses": [
@@ -323,6 +348,14 @@
       "userId": "04avty8nul5uhc7bcrdnkk5",
       "matchScore": 88,
       "status": "SHORTLISTED"
+    },
+    {
+      "id": "xuwjkth0whcvk6qtliu89",
+      "createdAt": "2026-06-20T02:16:17.701Z",
+      "jobId": "ogvqkjxawjk0m4rqatx5",
+      "userId": "siim4lexdmap3t86gtpuh",
+      "matchScore": 79,
+      "status": "APPLIED"
     }
   ]
 }

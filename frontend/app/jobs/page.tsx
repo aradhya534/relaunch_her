@@ -238,7 +238,7 @@ export default function JobBoardPage() {
                       </div>
 
                       <div className="flex flex-col items-end space-y-1 shrink-0">
-                        <Badge variant="gold" className="py-0.5 px-2.5 rounded-lg border border-brand-highlight/25 bg-brand-highlight/10 text-xs font-bold">{job.matchScore}% Match</Badge>
+                        <Badge variant="teal" className="py-0.5 px-2.5 rounded-lg border border-brand-accent/20 bg-brand-accent/10 text-xs font-bold">{job.matchScore}% Match</Badge>
                         <Badge variant="teal" className="flex items-center space-x-1 py-0.5 px-2 border border-brand-accent/20 bg-brand-accent/10 text-[9px] font-black uppercase tracking-wider">
                           <CheckCircle className="w-2.5 h-2.5 fill-brand-accent text-brand-dark" />
                           <span>Verified</span>

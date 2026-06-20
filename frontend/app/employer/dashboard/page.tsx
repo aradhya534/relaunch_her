@@ -178,7 +178,7 @@ export default function EmployerDashboard() {
         </Card>
 
         <Card variant="light" className="glow-card flex items-center space-x-4 p-6 bg-white border border-brand-bgLight/40 rounded-3xl">
-          <div className="h-12 w-12 rounded-2xl bg-brand-highlight/10 text-brand-highlight flex items-center justify-center shrink-0 border border-brand-highlight/25">
+          <div className="h-12 w-12 rounded-2xl bg-brand-accent/10 text-brand-accent flex items-center justify-center shrink-0 border border-brand-accent/25">
             <FileCheck className="w-5 h-5" />
           </div>
           <div>
@@ -249,7 +249,7 @@ export default function EmployerDashboard() {
                   <div className="space-y-2 text-left">
                     <div className="flex items-center space-x-2">
                       <span className="font-bold text-sm text-brand-primary">{app.applicantName}</span>
-                      <Badge variant="gold" className="py-0.5 px-2 text-[10px] font-bold border border-brand-highlight/25 bg-brand-highlight/10">{app.skillsMatchScore}% Match</Badge>
+                      <Badge variant="teal" className="py-0.5 px-2 text-[10px] font-bold border border-brand-accent/20 bg-brand-accent/10">{app.skillsMatchScore}% Match</Badge>
                     </div>
                     <div className="text-xs text-brand-dark/50 font-semibold leading-tight">
                       Applied for: <span className="text-brand-primary font-bold">{app.jobTitle}</span> &middot; Gap: <span className="text-brand-primary font-bold">{app.gapYears} Yrs</span>
@@ -265,7 +265,7 @@ export default function EmployerDashboard() {
                   </div>
 
                   <div className="flex items-center space-x-3 w-full sm:w-auto justify-end shrink-0">
-                    <Badge variant={app.status === 'SHORTLISTED' ? 'teal' : app.status === 'REVIEWING' ? 'gold' : 'gray'} className="py-0.5 px-2.5 rounded text-[10px] uppercase font-black tracking-wider">
+                    <Badge variant={app.status === 'SHORTLISTED' ? 'teal' : app.status === 'REVIEWING' ? 'indigo' : 'gray'} className="py-0.5 px-2.5 rounded text-[10px] uppercase font-black tracking-wider">
                       {app.status}
                     </Badge>
                     <Button variant="outline" size="sm" onClick={() => setSelectedApplicant(app)} className="text-xs flex items-center space-x-1.5 py-1.5 px-3 border border-brand-primary/20 hover:bg-brand-primary hover:text-white font-bold rounded-xl">
@@ -303,7 +303,7 @@ export default function EmployerDashboard() {
                 <div className="mb-6 text-left">
                   <div className="flex items-center space-x-3 mb-2">
                     <h3 className="text-2xl font-black font-serif text-brand-primary">{selectedApplicant.applicantName}</h3>
-                    <Badge variant="gold" className="py-0.5 px-2 border border-brand-highlight/25 bg-brand-highlight/10 text-xs font-bold">{selectedApplicant.skillsMatchScore}% Match</Badge>
+                    <Badge variant="teal" className="py-0.5 px-2 border border-brand-accent/20 bg-brand-accent/10 text-xs font-bold">{selectedApplicant.skillsMatchScore}% Match</Badge>
                   </div>
                   <p className="text-xs text-brand-dark/50 font-bold flex items-center space-x-1">
                     <Mail className="w-3.5 h-3.5 text-brand-dark/30" />

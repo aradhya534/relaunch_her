@@ -48,13 +48,13 @@ export default function LandingPage() {
   const partners = ['WSO2', 'Dialog', 'IFS', 'Sysco LABS', '99X'];
 
   return (
-    <div className="min-h-screen overflow-hidden">
+    <div className="min-h-screen overflow-hidden bg-brand-bgLight">
 
-      {/* ── Hero: Rich dark section ─────────────────────── */}
-      <div className="relative bg-brand-dark overflow-hidden">
+      {/* ── Hero: Cohesive light section ─────────────────── */}
+      <div className="relative bg-brand-bgLight overflow-hidden border-b border-brand-bgLight/70">
         {/* Soft ambient glows */}
-        <div className="absolute top-0 right-0 w-[700px] h-[700px] bg-brand-primary/15 rounded-full blur-[140px] pointer-events-none" />
-        <div className="absolute bottom-0 left-0 w-[500px] h-[500px] bg-brand-accent/8 rounded-full blur-[120px] pointer-events-none" />
+        <div className="absolute top-0 right-0 w-[700px] h-[700px] bg-brand-primary/5 rounded-full blur-[140px] pointer-events-none" />
+        <div className="absolute bottom-0 left-0 w-[500px] h-[500px] bg-brand-accent/5 rounded-full blur-[120px] pointer-events-none" />
 
         <section className="relative pt-20 pb-28 px-4 sm:px-6 lg:px-8 max-w-7xl mx-auto z-10">
           <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 items-center">
@@ -75,11 +75,11 @@ export default function LandingPage() {
                 initial={{ opacity: 0, y: 30 }}
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ duration: 0.8, delay: 0.1 }}
-                className="text-4xl sm:text-5xl md:text-6xl font-serif font-black tracking-tight leading-tight text-white"
+                className="text-4xl sm:text-5xl md:text-6xl font-serif font-black tracking-tight leading-tight text-brand-dark"
               >
                 Your tech career <br />
                 didn't end.{' '}
-                <span className="bg-gradient-to-r from-brand-accent to-brand-primary bg-clip-text text-transparent">
+                <span className="bg-gradient-to-r from-brand-primary to-brand-accent bg-clip-text text-transparent">
                   It paused.
                 </span>
               </motion.h1>
@@ -88,7 +88,7 @@ export default function LandingPage() {
                 initial={{ opacity: 0, y: 20 }}
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ duration: 0.8, delay: 0.2 }}
-                className="text-base sm:text-lg text-white/65 max-w-2xl leading-relaxed font-medium"
+                className="text-base sm:text-lg text-brand-dark/70 max-w-2xl leading-relaxed font-medium"
               >
                 Bridge the technical skills gap, refresh your stack, and match directly with premier Sri Lankan tech firms welcoming returnees back into software, product, and leadership roles.
               </motion.p>
@@ -100,13 +100,13 @@ export default function LandingPage() {
                 className="flex flex-col sm:flex-row gap-4 pt-4"
               >
                 <Link href="/signup?role=RETURNER">
-                  <Button variant="primary" size="lg" className="flex items-center space-x-2 w-full sm:w-auto text-brand-dark bg-brand-accent hover:bg-brand-accent/90 py-4 px-8 rounded-xl font-bold shadow-lg shadow-brand-accent/20">
+                  <Button variant="secondary" size="lg" className="flex items-center justify-center space-x-2 w-full sm:w-auto py-4 px-8 rounded-xl font-bold shadow-lg shadow-brand-primary/10">
                     <span>Start My Return</span>
                     <ArrowRight className="w-5 h-5" />
                   </Button>
                 </Link>
                 <Link href="/signup?role=EMPLOYER">
-                  <Button variant="outline" size="lg" className="w-full sm:w-auto text-white border-white/20 hover:border-white/40 hover:bg-white/5 py-4 px-8 rounded-xl font-bold">
+                  <Button variant="outline" size="lg" className="w-full sm:w-auto border-brand-primary text-brand-primary hover:bg-brand-primary hover:text-white py-4 px-8 rounded-xl font-bold">
                     Hire Returners
                   </Button>
                 </Link>
@@ -120,47 +120,47 @@ export default function LandingPage() {
               transition={{ duration: 0.8, delay: 0.2 }}
               className="lg:col-span-5 relative w-full h-[450px] flex items-center justify-center"
             >
-              <div className="absolute inset-0 bg-gradient-to-tr from-brand-primary/20 to-brand-accent/15 rounded-3xl filter blur-2xl opacity-60 z-0" />
-              <div className="absolute inset-0 border border-white/5 bg-white/[0.02] rounded-3xl z-0 overflow-hidden">
-                <div className="absolute inset-0 bg-[linear-gradient(to_right,rgba(255,255,255,0.02)_1px,transparent_1px),linear-gradient(to_bottom,rgba(255,255,255,0.02)_1px,transparent_1px)] bg-[size:24px_24px]" />
+              <div className="absolute inset-0 bg-gradient-to-tr from-brand-primary/5 to-brand-accent/5 rounded-3xl filter blur-2xl opacity-60 z-0" />
+              <div className="absolute inset-0 border border-brand-bgLight/85 bg-white/[0.4] rounded-3xl z-0 overflow-hidden">
+                <div className="absolute inset-0 bg-[linear-gradient(to_right,rgba(15,23,42,0.01)_1px,transparent_1px),linear-gradient(to_bottom,rgba(15,23,42,0.01)_1px,transparent_1px)] bg-[size:24px_24px]" />
               </div>
 
               {/* Float Card 1 */}
-              <div className="absolute top-8 left-6 w-52 p-4 rounded-2xl border border-white/10 bg-brand-cardDark/90 shadow-2xl animate-float-slow z-20">
+              <div className="absolute top-8 left-6 w-52 p-4 rounded-2xl border border-brand-bgLight/85 bg-white shadow-xl z-20">
                 <div className="flex justify-between items-center mb-3">
                   <span className="text-[9px] uppercase tracking-widest text-brand-accent font-black">AI & DevOps Refresh</span>
                   <Sparkles className="w-3.5 h-3.5 text-brand-accent animate-pulse" />
                 </div>
                 <div className="flex items-baseline space-x-2">
-                  <span className="text-3xl font-serif font-black text-white">92%</span>
-                  <span className="text-[10px] text-white/50">Market Match</span>
+                  <span className="text-3xl font-serif font-black text-brand-dark">92%</span>
+                  <span className="text-[10px] text-brand-dark/50">Market Match</span>
                 </div>
-                <div className="w-full bg-white/10 h-1.5 rounded-full mt-3 overflow-hidden">
+                <div className="w-full bg-brand-bgLight h-1.5 rounded-full mt-3 overflow-hidden">
                   <div className="h-full bg-brand-accent w-[92%]" />
                 </div>
-                <p className="text-[9px] text-white/40 mt-2">Verified readiness score</p>
+                <p className="text-[9px] text-brand-dark/50 mt-2">Verified readiness score</p>
               </div>
 
               {/* Float Card 2 */}
-              <div className="absolute bottom-8 right-6 w-60 p-4 rounded-2xl border border-white/10 bg-brand-cardDark/90 shadow-2xl animate-float-fast z-20">
+              <div className="absolute bottom-8 right-6 w-60 p-4 rounded-2xl border border-brand-bgLight/85 bg-white shadow-xl z-20">
                 <div className="flex items-center space-x-2 mb-3">
-                  <div className="h-6 w-6 rounded-lg bg-brand-highlight/20 text-brand-highlight flex items-center justify-center font-bold text-xs">W</div>
+                  <div className="h-6 w-6 rounded-lg bg-brand-primary/10 text-brand-primary flex items-center justify-center font-bold text-xs">W</div>
                   <div>
-                    <h4 className="text-[11px] font-black text-white">Senior Software Engineer</h4>
-                    <p className="text-[9px] text-white/50">WSO2 &middot; Hybrid Path</p>
+                    <h4 className="text-[11px] font-black text-brand-dark">Senior Software Engineer</h4>
+                    <p className="text-[9px] text-brand-dark/50">WSO2 &middot; Hybrid Path</p>
                   </div>
                 </div>
-                <div className="flex items-center justify-between border-t border-white/5 pt-2.5 mt-2">
+                <div className="flex items-center justify-between border-t border-brand-bgLight/40 pt-2.5 mt-2">
                   <span className="text-[9px] font-semibold text-brand-accent bg-brand-accent/10 px-2 py-0.5 rounded">Specialist breaks program</span>
-                  <ArrowUpRight className="w-3.5 h-3.5 text-white/40" />
+                  <ArrowUpRight className="w-3.5 h-3.5 text-brand-dark/45" />
                 </div>
               </div>
 
               {/* Central Box */}
-              <div className="absolute p-6 rounded-3xl border border-white/10 bg-brand-cardDark/70 backdrop-blur-md shadow-2xl text-center max-w-[280px] z-10">
-                <Award className="w-10 h-10 text-brand-highlight mx-auto mb-3" />
-                <h3 className="font-serif text-lg font-bold text-white leading-tight">Empowering returnees</h3>
-                <p className="text-xs text-white/55 mt-2 leading-relaxed">
+              <div className="absolute p-6 rounded-3xl border border-brand-bgLight/85 bg-white shadow-2xl text-center max-w-[280px] z-10">
+                <Award className="w-10 h-10 text-brand-primary mx-auto mb-3" />
+                <h3 className="font-serif text-lg font-bold text-brand-dark leading-tight">Empowering returnees</h3>
+                <p className="text-xs text-brand-dark/65 mt-2 leading-relaxed">
                   Reconnect, rebuild credentials, and secure verified direct placements.
                 </p>
               </div>
@@ -272,7 +272,7 @@ export default function LandingPage() {
                           </div>
                           <span className="font-bold text-sm text-brand-dark">{t.name}</span>
                         </div>
-                        <Badge variant="gold" className="py-1 px-3 rounded-lg border border-brand-highlight/20 bg-brand-highlight/10 text-xs">
+                        <Badge variant="indigo" className="py-1 px-3 rounded-lg text-xs">
                           {t.gap}
                         </Badge>
                       </div>
@@ -280,9 +280,9 @@ export default function LandingPage() {
                     </div>
                     <div className="border-t border-brand-bgLight pt-4 flex items-center justify-between mt-auto">
                       <span className="text-[10px] font-black uppercase tracking-widest text-brand-accent">{t.role}</span>
-                      <div className="flex space-x-0.5 text-brand-highlight">
+                      <div className="flex space-x-0.5">
                         {[1, 2, 3, 4, 5].map((s) => (
-                          <Star key={s} className="w-3 h-3 fill-brand-highlight" />
+                          <Star key={s} className="w-3 h-3 fill-amber-500 text-amber-500" />
                         ))}
                       </div>
                     </div>

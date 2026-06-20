@@ -8,6 +8,7 @@ import { FileUp, Award, Clock, ArrowRight, ArrowLeft, CheckCircle2, ChevronRight
 import { motion, AnimatePresence } from 'framer-motion';
 import Card from '@/components/ui/Card';
 import Button from '@/components/ui/Button';
+import Badge from '@/components/ui/Badge';
 import ProgressRing from '@/components/ui/ProgressRing';
 
 export default function AssessmentPage() {
@@ -145,30 +146,50 @@ export default function AssessmentPage() {
     <div className="max-w-4xl mx-auto px-4 py-12 text-left">
       {/* Visual Step Tracker */}
       {step < 4 && (
-        <div className="flex items-center justify-center space-x-4 mb-10">
-          {[1, 2, 3].map((num) => (
-            <React.Fragment key={num}>
-              <div 
-                className={`h-9 w-9 rounded-xl flex items-center justify-center text-xs font-bold transition-all ${
-                  step === num 
-                    ? 'bg-brand-primary text-white shadow-lg shadow-brand-primary/20 ring-2 ring-brand-accent' 
-                    : step > num 
-                      ? 'bg-brand-accent text-brand-dark shadow-sm' 
-                      : 'bg-white text-brand-dark/40 border border-brand-bgLight'
-                }`}
-              >
-                {num}
-              </div>
-              {num < 3 && (
-                <div className="h-1.5 w-16 bg-brand-bgLight/60 rounded-full overflow-hidden">
-                  <div 
-                    className="h-full bg-brand-accent transition-all duration-500"
-                    style={{ width: step > num ? '100%' : '0%' }}
-                  />
+        <div className="mb-10">
+          {/* Step labels row */}
+          <div className="flex items-start justify-center gap-0 mb-3 max-w-sm mx-auto">
+            {[
+              { num: 1, label: 'Background' },
+              { num: 2, label: 'Skills' },
+              { num: 3, label: 'Gap Details' },
+            ].map(({ num, label }, idx) => (
+              <React.Fragment key={num}>
+                <div className="flex flex-col items-center min-w-[72px]">
+                  <div
+                    className={`h-10 w-10 rounded-2xl flex items-center justify-center text-sm font-black transition-all duration-300 ${
+                      step === num
+                        ? 'bg-brand-primary text-white shadow-lg shadow-brand-primary/25 scale-110'
+                        : step > num
+                        ? 'bg-brand-accent text-brand-dark shadow-sm'
+                        : 'bg-white text-brand-dark/30 border-2 border-brand-bgLight'
+                    }`}
+                  >
+                    {step > num ? <CheckCircle2 className="w-5 h-5" /> : num}
+                  </div>
+                  <span
+                    className={`text-[10px] font-black uppercase tracking-widest mt-1.5 transition-colors ${
+                      step === num
+                        ? 'text-brand-primary'
+                        : step > num
+                        ? 'text-brand-accent'
+                        : 'text-brand-dark/30'
+                    }`}
+                  >
+                    {label}
+                  </span>
                 </div>
-              )}
-            </React.Fragment>
-          ))}
+                {idx < 2 && (
+                  <div className="flex-1 h-1.5 rounded-full bg-brand-bgLight overflow-hidden mt-4 mx-1 min-w-[32px]">
+                    <div
+                      className="h-full bg-brand-accent rounded-full transition-all duration-700 ease-out"
+                      style={{ width: step > num ? '100%' : '0%' }}
+                    />
+                  </div>
+                )}
+              </React.Fragment>
+            ))}
+          </div>
         </div>
       )}
 
@@ -229,8 +250,13 @@ export default function AssessmentPage() {
                   <div className="flex justify-end pt-4 border-t border-brand-bgLight/40">
                     <Button 
                       variant="primary" 
-                      disabled={!lastJobTitle} 
-                      onClick={() => nextStep(2)}
+                      onClick={() => {
+                        if (!lastJobTitle) {
+                          toast.error('Please select your last job title to continue.');
+                          return;
+                        }
+                        nextStep(2);
+                      }}
                       className="flex items-center space-x-2 px-6 text-xs py-3 rounded-xl font-bold bg-brand-accent text-brand-dark shadow-md shadow-brand-accent/10"
                     >
                       <span>Continue to Skills</span>
@@ -403,7 +429,9 @@ export default function AssessmentPage() {
                     variant="primary" 
                     size="lg" 
                     className="w-full flex items-center justify-center space-x-2 text-brand-dark bg-brand-accent font-bold py-3.5 rounded-xl shadow-md shadow-brand-accent/15" 
-                    onClick={() => router.push('/dashboard')}
+                    onClick={() => {
+                      window.location.href = '/dashboard';
+                    }}
                   >
                     <span>Go to My Dashboard</span>
                     <ChevronRight className="w-4.5 h-4.5" />

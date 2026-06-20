@@ -19,7 +19,8 @@ export const ProgressRing: React.FC<ProgressRingProps> = ({
 }) => {
   const radius = (size - strokeWidth) / 2;
   const circumference = radius * 2 * Math.PI;
-  const offset = circumference - (Math.max(0, Math.min(percentage, 100)) / 100) * circumference;
+  const safePercentage = typeof percentage === 'number' && !isNaN(percentage) ? percentage : 0;
+  const offset = circumference - (Math.max(0, Math.min(safePercentage, 100)) / 100) * circumference;
 
   return (
     <div className="relative flex items-center justify-center" style={{ width: size, height: size }}>
